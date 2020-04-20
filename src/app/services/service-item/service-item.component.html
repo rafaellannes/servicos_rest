@@ -1,0 +1,17 @@
+<ion-row>
+
+  <ion-col size="9" text-wrap>
+    <h2>{{service.name}}</h2>
+    <ion-text color="light">
+      <p>{{service.description}}</p>
+    </ion-text>
+  </ion-col>
+
+  <ion-col size="3" class="ion-text-end">
+    <h2>{{service.time}}</h2>
+    <ion-text color="success">
+      <p>{{service.price | currency: 'BRL'}}</p>
+    </ion-text>
+  </ion-col>
+
+</ion-row>

@@ -8,22 +8,28 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: 'services',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+              import('../services/service-list/service-list.module').then(m => m.ServiceListPageModule)
+          },
+          {
+            path:'new-schedule/:serviceId',
+            loadChildren: () =>
+              import('../schedules/schedule-form/schedule-form.module').then(m => m.ScheduleFormPageModule)
+
           }
         ]
       },
       {
-        path: 'tab2',
+        path: 'my-schedules',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+              import('../schedules/my-schedules-list/my-schedules-list.module').then(m => m.MySchedulesListPageModule)
           }
         ]
       },
@@ -39,14 +45,14 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/services',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/services',
     pathMatch: 'full'
   }
 ];

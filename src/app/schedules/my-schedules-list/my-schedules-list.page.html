@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Meus agendamentos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-login-lock title="Meus agendamentos" message="Para ver seus agendamentos é necessário efetuar login"
+    *ngIf="!isUserAuthenticated"></app-login-lock>
+
+  <!-- if the user is authenticated -->
+  <ion-list *ngIf="isUserAuthenticated && schedules != null">
+    <ion-item *ngFor="let schedule of schedules">
+      <ion-label>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              {{schedule.date | date:'EEE, dd/MM' }} às {{schedule.date | date:'HH:mm aaa' }}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-text [color]="schedule.getStatusColor()">
+                {{ schedule.getStatusName() }}
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <app-service-item [service]=schedule.service></app-service-item>
+        </ion-grid>
+        <ion-button color="secondary" [routerLink]="['/tabs/services/new-schedule', schedule.service.id]">
+          <ion-icon name="calendar"></ion-icon> Agendar
+        </ion-button>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Novo agendamento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-login-lock title="Novo agendamento" message="Para fazer um agendamento é necessário efetuar login"
+    *ngIf="!isUserAuthenticated"></app-login-lock>
+
+  <form #scheduleForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="isUserAuthenticated">
+
+    <ion-list>
+
+      <ion-item>
+        <ion-label>
+          <app-service-item [service]="service" *ngIf="service != null"></app-service-item>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Quando quer ser atendido?</ion-label>
+        <ion-datetime displayFormat="DDD, DD/MM/YYYY" picker-format="DDD, DD/MM/YYYY"
+          placeholder="Selecione a data do atendimento" [(ngModel)]="schedulModel.date" name="scheduleDate"
+          #scheduleDate="ngModel" (ionChange)="dateChanged()" required>
+        </ion-datetime>
+      </ion-item>
+      <ion-item lines="none" *ngIf="scheduleDate.invalid && (scheduleDate.dirty || scheduleDate.touched)">
+        <ion-label color="danger">
+          <p *ngIf="scheduleDate.errors.required">O campo é obrigatório</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Em qual horario quer ser atendido?</ion-label>
+        <ion-select placeholder="Selecione um horário" [(ngModel)]="schedulModel.time" name="schedulTime"
+          #schedulTime="ngModel" required>
+          <ion-select-option *ngFor="let time of times" [value]="time.value">{{time.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item lines="none" *ngIf="schedulTime.invalid && (schedulTime.dirty || schedulTime.touched)">
+        <ion-label color="danger">
+          <p *ngIf="schedulTime.errors.required">O campo é obrigatório</p>
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+
+    <div class="ion-margin">
+      <ion-button type="submit" color="secondary" expand="block" [disabled]="!scheduleForm.form.valid">
+        Enviar agendamento <ion-icon name="calendar" slot="end"></ion-icon>
+      </ion-button>
+    </div>
+
+  </form>
+</ion-content>
