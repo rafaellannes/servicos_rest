@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { map } from 'rxjs/operators';
 import { Schedule } from './schedule';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -14,7 +15,7 @@ export class ScheduleService {
 
   sendSchedule(schedule: Schedule) {
     console.log(schedule);
-    return this.http.post('http://localhost:8000/api/schedules',
+    return this.http.post(`${environment.api}/schedules`,
       {
         status: schedule.status,
         date: this.datePipe.transform(schedule.date, 'yyyy-MM-ddTHH:mm'),
@@ -23,7 +24,7 @@ export class ScheduleService {
   }
 
   getSchedules() {
-    return this.http.get<Schedule[]>('http://localhost:8000/api/schedules')
+    return this.http.get<Schedule[]>(`${environment.api}/schedules`)
       .pipe(
         map(data => {
           const ScheduleArray = data as any[];

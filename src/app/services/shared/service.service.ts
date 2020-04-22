@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Service } from './service​';
 import { Storage } from '@ionic/storage';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -25,11 +26,11 @@ export class ServiceService {
       })
     };
 
-    return this.http.get<Service[]>('http://localhost:8000/api/services', httpOptions).toPromise();
+    return this.http.get<Service[]>(`${environment.api}/services`, httpOptions).toPromise();
   }
 
   getById(id: number) {
-    return this.http.get<Service>(`http://localhost:8000/api/services/${id}`).toPromise();
+    return this.http.get<Service>(`${environment.api}/services/${id}`).toPromise();
   }
 
 }

@@ -51,7 +51,7 @@ export class ScheduleFormPage implements OnInit {
     this.populateTimes();
   }
 
-  populateTimes() {
+ /*  populateTimes() {
     this.times = [];
     const date = new Date(Date.parse(this.schedulModel.date));
     const year = date.getFullYear();
@@ -66,7 +66,27 @@ export class ScheduleFormPage implements OnInit {
       });
     }
   }
+ */
+  populateTimes() {
+    this.times = [];
+    if (this.schedulModel.date) {
+     const date = new Date(Date.parse(this.schedulModel.date));
+     const year = date.getFullYear();
+     const month = date.getMonth();
+     const day = date.getDate();
+   
+     for (let i = 9; i < 19; i++) {
+       let scheduleDate = new Date(year, month, day, i, 0, 0, 0);
+       this.times.push({
+      name: this.datePipe.transform(scheduleDate, 'HH:mm'),
+      value: this.datePipe.transform(scheduleDate, 'yyyy-MM-ddTHH:mm')
+       });
+     }
+    }    
+   }
 
+
+  
   async createSchedule() {
     var schedule = new Schedule();
 

@@ -6,6 +6,7 @@ import { Account } from './account';
 import { Login } from './login';
 import { Storage } from '@ionic/storage';
 import { from } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,11 @@ export class AuthService {
   constructor(private http: HttpClient, private storage: Storage) { }
 
   createAccount(account: Account) {
-    return this.http.post('http://localhost:8000/api/register', account).toPromise()
+    return this.http.post(`${environment.api}/register`, account).toPromise()
   }
 
   login(login: Login) {
-    return this.http.post('http://localhost:8000/api/login', login)
+    return this.http.post(`${environment.api}/login`, login)
       .pipe(
         map((resp: any) => {
           const token = resp.success.token;
